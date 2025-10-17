@@ -1,0 +1,94 @@
+name: Private Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-and-distribute:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+
+    - name: Set up Python
+      run: uv python install 3.11
+
+    - name: Install dependencies
+      run: |
+        uv pip install -e ".[dev]"
+
+    - name: Run tests
+      run: |
+        uv run python -m pytest tests/ -v
+
+    - name: Build package
+      run: |
+        uv build
+
+    - name: Upload to GitHub Packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: prisma-common-${{ github.ref_name }}
+        path: dist/
+        retention-days: 30
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Private Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        body: |
+          ## 🔒 Private Release ${{ github.ref_name }}
+          
+          This is a **private package** for internal use only.
+          
+          ## 📦 Installation
+          
+          Install directly from GitHub repository:
+          
+          ```bash
+          # Install latest version
+          pip install git+https://github.com/prisma-platform/prisma-shared.git@${{ github.ref_name }}
+          
+          # Or install specific version
+          pip install git+https://github.com/prisma-platform/prisma-shared.git@v0.1.0
+          ```
+          
+          ## 🔐 Access Requirements
+          
+          - ✅ GitHub repository access required
+          - ✅ Internal team members only
+          - ❌ Not available on public PyPI
+          
+          ## 📋 Changes in ${{ github.ref_name }}
+          
+          - Bug fixes and improvements
+          - Updated dependencies
+          - Enhanced logging capabilities
+          
+          ## 📚 Documentation
+          
+          See [README.md](https://github.com/prisma-platform/prisma-shared#readme) for usage examples.
+          
+          ## 🚀 Development
+          
+          For development setup:
+          ```bash
+          git clone https://github.com/prisma-platform/prisma-shared.git
+          cd prisma-shared
+          uv pip install -e .
+          ```

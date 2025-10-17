@@ -1,0 +1,295 @@
+# This file contains logging configurations for different environments
+
+# Development Environment
+development:
+  version: 1
+  disable_existing_loggers: false
+  
+  formatters:
+    colorful:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    
+    json:
+      format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "module": "%(module)s", "function": "%(funcName)s", "line": %(lineno)d}'
+      datefmt: '%Y-%m-%dT%H:%M:%S.%fZ'
+  
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: colorful
+      stream: ext://sys.stdout
+    
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: DEBUG
+      formatter: json
+      filename: logs/development.log
+      maxBytes: 10485760  # 10MB
+      backupCount: 5
+      encoding: utf8
+  
+  loggers:
+    prisma:
+      level: DEBUG
+      handlers: [console, file]
+      propagate: false
+    
+    prisma.audit:
+      level: INFO
+      handlers: [file]
+      propagate: false
+    
+    prisma.security:
+      level: WARNING
+      handlers: [file]
+      propagate: false
+    
+    prisma.performance:
+      level: INFO
+      handlers: [file]
+      propagate: false
+  
+  root:
+    level: DEBUG
+    handlers: [console]
+
+# Staging Environment
+staging:
+  version: 1
+  disable_existing_loggers: false
+  
+  formatters:
+    json:
+      format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "module": "%(module)s", "function": "%(funcName)s", "line": %(lineno)d, "thread": %(thread)d, "process": %(process)d}'
+      datefmt: '%Y-%m-%dT%H:%M:%S.%fZ'
+  
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: INFO
+      formatter: json
+      stream: ext://sys.stdout
+    
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: /app/logs/staging.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+      encoding: utf8
+    
+    error_file:
+      class: logging.handlers.RotatingFileHandler
+      level: ERROR
+      formatter: json
+      filename: /app/logs/error.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+      encoding: utf8
+    
+    audit_file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: /app/logs/audit.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 20
+      encoding: utf8
+  
+  loggers:
+    prisma:
+      level: INFO
+      handlers: [console, file]
+      propagate: false
+    
+    prisma.audit:
+      level: INFO
+      handlers: [audit_file]
+      propagate: false
+    
+    prisma.security:
+      level: WARNING
+      handlers: [error_file]
+      propagate: false
+    
+    prisma.performance:
+      level: INFO
+      handlers: [file]
+      propagate: false
+  
+  root:
+    level: INFO
+    handlers: [console]
+
+# Production Environment
+production:
+  version: 1
+  disable_existing_loggers: false
+  
+  formatters:
+    json:
+      format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "module": "%(module)s", "function": "%(funcName)s", "line": %(lineno)d, "thread": %(thread)d, "process": %(process)d}'
+      datefmt: '%Y-%m-%dT%H:%M:%S.%fZ'
+  
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: WARNING
+      formatter: json
+      stream: ext://sys.stdout
+    
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: /var/log/prisma/application.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+      encoding: utf8
+    
+    error_file:
+      class: logging.handlers.RotatingFileHandler
+      level: ERROR
+      formatter: json
+      filename: /var/log/prisma/error.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+      encoding: utf8
+    
+    audit_file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: /var/log/prisma/audit.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 30
+      encoding: utf8
+    
+    security_file:
+      class: logging.handlers.RotatingFileHandler
+      level: WARNING
+      formatter: json
+      filename: /var/log/prisma/security.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 30
+      encoding: utf8
+    
+    performance_file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: /var/log/prisma/performance.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+      encoding: utf8
+    
+    syslog:
+      class: logging.handlers.SysLogHandler
+      level: ERROR
+      formatter: json
+      address: '/dev/log'
+      facility: 'local7'
+  
+  loggers:
+    prisma:
+      level: INFO
+      handlers: [file]
+      propagate: false
+    
+    prisma.audit:
+      level: INFO
+      handlers: [audit_file]
+      propagate: false
+    
+    prisma.security:
+      level: WARNING
+      handlers: [security_file, syslog]
+      propagate: false
+    
+    prisma.performance:
+      level: INFO
+      handlers: [performance_file]
+      propagate: false
+    
+    prisma.error:
+      level: ERROR
+      handlers: [error_file, syslog]
+      propagate: false
+  
+  root:
+    level: WARNING
+    handlers: [console]
+
+# Log Monitoring Configuration
+monitoring:
+  patterns:
+    - name: "high_error_rate"
+      pattern: '"level":\s*"ERROR"'
+      severity: "CRITICAL"
+      threshold: 10
+      time_window_minutes: 5
+      enabled: true
+    
+    - name: "database_connection_errors"
+      pattern: "database.*connection.*error|connection.*refused|timeout.*database"
+      severity: "ERROR"
+      threshold: 3
+      time_window_minutes: 5
+      enabled: true
+    
+    - name: "memory_leak"
+      pattern: "memory.*leak|out of memory|memory.*exceeded"
+      severity: "CRITICAL"
+      threshold: 1
+      time_window_minutes: 1
+      enabled: true
+    
+    - name: "authentication_failures"
+      pattern: "authentication.*failed|invalid.*credentials|unauthorized"
+      severity: "WARNING"
+      threshold: 5
+      time_window_minutes: 10
+      enabled: true
+    
+    - name: "api_rate_limiting"
+      pattern: "rate.*limit|too many requests|429"
+      severity: "WARNING"
+      threshold: 3
+      time_window_minutes: 5
+      enabled: true
+    
+    - name: "slow_queries"
+      pattern: "slow.*query|query.*timeout|database.*slow"
+      severity: "WARNING"
+      threshold: 5
+      time_window_minutes: 10
+      enabled: true
+    
+    - name: "external_service_failures"
+      pattern: "external.*service.*error|api.*call.*failed|service.*unavailable"
+      severity: "ERROR"
+      threshold: 3
+      time_window_minutes: 5
+      enabled: true
+  
+  metrics:
+    collection_interval: 60  # seconds
+    retention_days: 30
+    enable_system_metrics: true
+    enable_business_metrics: true
+  
+  alerting:
+    enabled: true
+    channels:
+      - type: "email"
+        recipients: ["admin@prisma.com"]
+        severity_threshold: "ERROR"
+      - type: "slack"
+        webhook_url: "${SLACK_WEBHOOK_URL}"
+        severity_threshold: "WARNING"
+      - type: "pagerduty"
+        integration_key: "${PAGERDUTY_KEY}"
+        severity_threshold: "CRITICAL"

@@ -1,0 +1,10 @@
+# Browser Use Operator Prompts Configuration
+
+description: |-
+  A specialized browser automation operator designed for controlling web browsers through natural language instructions. The BrowserUseOperator enables AI agents to perform web interactions, navigate websites, extract information, and automate browser-based tasks with high precision and reliability. This operator provides more fine-grained web operations compared to web-search, offering detailed control over browser elements, form interactions, page navigation, and complex multi-step web workflows.
+  When to Use:
+  - Specific Page Navigation: When you need to access particular sections of websites (like 'View history', 'Edit', specific tabs)
+  - Precise Element Manipulation: When you need to interact with specific UI elements, buttons, or forms
+  - Multi-Step Web Workflows: Complex sequences of web interactions that search APIs cannot handle
+  - Information Location Tasks: When you need to locate specific information, images, links, or elements on web pages. This includes finding citation links, reference URLs, specific images, or any targeted content that requires precise identification and extraction from web pages
+  - Data and Element Discovery: When you need to find and extract specific data points, metadata, content elements, or structured information from web pages that requires targeted browsing and element identification
