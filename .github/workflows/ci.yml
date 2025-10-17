@@ -34,7 +34,7 @@ jobs:
 
     - name: Run tests
       run: |
-        uv run python -m pytest tests/ -v --tb=short
+        uv run python -m pytest
 
     - name: Run simple logging test
       run: |
