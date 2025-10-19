@@ -50,7 +50,28 @@ class SandboxEngine:
         # Configuration
         self.public_packages = public_packages or ["numpy", "pandas"]
         self.private_repos = private_repos or ["nodetree-io/prisma-shared"]
-        self.env_vars = env_vars or {}
+        
+        # Auto-include common environment variables from current environment
+        auto_env_vars = {}
+        important_env_vars = [
+            "OPENAI_API_KEY",
+            "ANTHROPIC_API_KEY", 
+            "GOOGLE_API_KEY",
+            "GITHUB_TOKEN",
+            "DEV_MODEL_NAME",
+            "DEV_LLM_NAME",
+            "PROD_MODEL_NAME",
+            "PROD_LLM_NAME",
+        ]
+        
+        for var in important_env_vars:
+            value = os.getenv(var)
+            if value:
+                auto_env_vars[var] = value
+                print(f"✓ Including env var: {var}")
+        
+        # Merge auto-detected with user-provided env vars (user-provided takes precedence)
+        self.env_vars = {**auto_env_vars, **(env_vars or {})}
         self.cpu = cpu
         self.memory = memory
         self.disk = disk
