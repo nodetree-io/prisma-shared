@@ -1,28 +1,25 @@
 """
-Prisma Common SDK - Shared components for Prisma microservices.
+Common SDK - Shared components for Prisma microservices.
 
 This package provides a comprehensive SDK for the Prisma platform,
-including operators, MCP clients, tools, utilities, and configuration management.
+including operators, tools, utilities, and configuration management.
 
 Usage Examples:
     # Configuration and logging
-    from prisma_common import get_prisma_logger
+    from common import get_prisma_logger
+    from common.config import Settings, get_settings
     
-    # Operators with deep imports
-    from prisma_common.operators.research import DeepResearchOperator
-    from prisma_common.operators.analysis import DataAnalysisOperator
-    
-    # MCP clients
-    from prisma_common.mcp.clients import MCPClient
-    from prisma_common.mcp.protocols import MCPProtocol
+    # Operators
+    from common.operators.research import DeepResearchOperator
+    from common.operators.analysis import DataAnalysisOperator
     
     # Tools
-    from prisma_common.tools.gmail import GmailTool
-    from prisma_common.tools.calendar import CalendarTool
+    from common.tools.gmail import GmailTool
+    from common.tools.calendar import CalendarTool
     
     # Utilities
-    from prisma_common.utils.logging import get_prisma_logger
-    from prisma_common.utils.validation import validate_email
+    from common.utils.logging import get_prisma_logger
+    from common.utils.validation import validate_email
 """
 
 __version__ = "0.1.0"

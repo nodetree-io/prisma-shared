@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 
-from src.tool.base_tool import YOPOBaseTool, BaseToolConfig
+from ..tools.base_tool import YOPOBaseTool, BaseToolConfig
 
 
 class FinalAnswerResult(BaseModel):

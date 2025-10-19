@@ -14,7 +14,7 @@ from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 from firecrawl import FirecrawlApp
 
-from src.tool.base_tool import YOPOBaseTool, BaseToolConfig
+from ..tools.base_tool import YOPOBaseTool, BaseToolConfig
 
 load_dotenv()
 

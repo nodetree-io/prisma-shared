@@ -16,8 +16,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
-from src.core.operators.llm.llm_provider import llm_instance
-from src.mcp.mcp_client import MCPZoo
+from .llm.llm_provider import llm_instance
+# from ..mcp.mcp_client import MCPZoo  # TODO: MCP module not available
 
 load_dotenv()
 
@@ -78,16 +78,18 @@ class BaseOperator(ABC):
         Returns:
             List[Any]: List of tool objects for the agent
         """
-        mcp_zoo = MCPZoo(mcp_names=self.mcps)
+        # TODO: MCP module not available - commenting out MCPZoo usage
+        # mcp_zoo = MCPZoo(mcp_names=self.mcps)
         if not self.mcps:
             return []
 
         # Ensure we have an MCPZoo. If none provided, attempt a safe default for convenience.
-        try:
-            tools = await mcp_zoo.get_tools(self.mcps)
-            return tools
-        except Exception as e:
-            return []
+        # try:
+        #     tools = await mcp_zoo.get_tools(self.mcps)
+        #     return tools
+        # except Exception as e:
+        #     return []
+        return []  # Return empty list until MCP module is available
 
     def inject_customize_prompt(self, system_prompt: str):
         """

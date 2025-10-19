@@ -8,8 +8,8 @@ import sys
 
 from pydantic import BaseModel, Field
 
-from src.core.operators.base_op import BaseOperator
-from src.utils.logging import get_logger
+from .base_op import BaseOperator
+from ..utils.logging import get_logger
 
 class OperatorInfo(BaseModel):
     """Information about an operator including its metadata and argument schema."""
@@ -265,12 +265,12 @@ def get_operator_instance(operator_name: str, **kwargs) -> BaseOperator:
 if __name__ == "__main__":
     # Test the FileProcessingOperator
     import asyncio
-    from src.core.operators.file_processing_op import FileProcessingOperator
-    from src.core.operators.browser_use_op import BrowserUseOperator
-    from src.core.operators.format_op import FormatOperator
-    from src.core.operators.deep_research_op import DeepResearchOperator
-    from src.core.operators.custom_op import CustomOperator
-    from src.tool.tool_manager import get_tools, get_all_base_tool_names, get_tool_infos
+    from .file_processing_op import FileProcessingOperator
+    from .browser_use_op import BrowserUseOperator
+    from .format_op import FormatOperator
+    from .deep_research_op import DeepResearchOperator
+    from .custom_op import CustomOperator
+    from ..tools.tool_manager import get_tools, get_all_base_tool_names, get_tool_infos
 
     async def test_file_processing_operator():
         """Simple test for FileProcessingOperator."""

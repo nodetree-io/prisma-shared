@@ -27,8 +27,8 @@ uv pip install -e .
 ## Usage
 
 ```python
-from prisma_common.utils.logging import get_logger
-from prisma_common.config import Settings, get_settings
+from common.utils.logging import get_logger
+from common.config import Settings, get_settings
 
 # Initialize logger
 logger = get_logger(__name__)

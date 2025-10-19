@@ -14,16 +14,16 @@ from pathlib import Path
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 
-from src.tool.base_tool import YOPOBaseTool, BaseToolConfig
-from src.utils.logging import get_logger
+from ..tools.base_tool import YOPOBaseTool, BaseToolConfig
+from ..utils.logging import get_logger
 
 # Add project root to path for imports
 _current_dir = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(_current_dir))
 
 # Import YOPO system components
-from src.core.operators.operator_manager import get_operator_instance
-from src.tool.tool_manager import get_tools
+from .operator_manager import get_operator_instance
+from ..tools.tool_manager import get_tools
 
 logger = get_logger(__name__)
 

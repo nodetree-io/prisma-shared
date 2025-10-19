@@ -17,9 +17,9 @@ from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, System
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 
-from src.core.operators.llm.llm_provider import llm_instance, LLMProvider
-from src.core.operators.base_op import BaseOperator, OperatorResult
-from src.utils.logging import get_logger
+from .llm.llm_provider import llm_instance, LLMProvider
+from .base_op import BaseOperator, OperatorResult
+from ..utils.logging import get_logger
 
 logger = get_logger(name="SynthesisOperator")
 

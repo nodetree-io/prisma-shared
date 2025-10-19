@@ -11,10 +11,10 @@ from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 from mcp_use import MCPAgent as MCPUseAgent
 
-from src.mcp.mcp_client import MCPZoo
-from src.mcp.mcp_client_for_mcp_bench import MCPBenchZoo
-from src.tool.tool_manager import get_tools, get_tool_infos
-from src.core.operators.llm.llm_provider import LLMProvider
+# from ..mcp.mcp_client import MCPZoo  # TODO: MCP module not available
+from ..mcp.mcp_client_for_mcp_bench import MCPBenchZoo
+from ..tools.tool_manager import get_tools, get_tool_infos
+from .llm.llm_provider import LLMProvider
 
 
 class WrappedAgent(ABC):
@@ -190,7 +190,7 @@ def create_wrapped_agent(
 
 if __name__ == "__main__":
     import asyncio
-    from src.core.operators.llm.llm_provider import llm_instance
+    from .llm.llm_provider import llm_instance
     
     async def test_wrapped_agents():
         """Simple test for wrapped agents"""

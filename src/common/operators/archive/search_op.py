@@ -11,10 +11,10 @@ from the web to support research and information gathering tasks.
 from typing import Dict, Any, Optional, List
 import yaml
 
-from src.core.operators.llm.llm_wrapped_agent import create_wrapped_agent
-from src.core.operators.base_op import BaseOperator, OperatorResult
-from src.tool.tool_manager import get_tools
-from src.utils.logging import get_logger
+from .llm.llm_wrapped_agent import create_wrapped_agent
+from .base_op import BaseOperator, OperatorResult
+from ..tools.tool_manager import get_tools
+from ..utils.logging import get_logger
 
 logger = get_logger(name="SearchOperator")
 

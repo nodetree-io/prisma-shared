@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 
-from src.tool.base_tool import YOPOBaseTool, BaseToolConfig
-from src.tool.interpreter.local_interpreter import evaluate_python_code, BASE_BUILTIN_MODULES, BASE_PYTHON_TOOLS
+from ..tools.base_tool import YOPOBaseTool, BaseToolConfig
+from ..tools.interpreter.local_interpreter import evaluate_python_code, BASE_BUILTIN_MODULES, BASE_PYTHON_TOOLS
 
 
 class CodeExecutionResult(BaseModel):

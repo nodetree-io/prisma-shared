@@ -67,7 +67,7 @@ ai = [
 ]
 
 all = [
-    "prisma-common[gmail,notion,ai]"
+    "common[gmail,notion,ai]"
 ]
 
 [build-system]
