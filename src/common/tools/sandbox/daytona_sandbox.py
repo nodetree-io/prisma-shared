@@ -102,9 +102,17 @@ class SandboxEngine:
                 
                 # Install the package in editable mode from the cloned directory
                 install_result = self.sandbox.process.exec(f"pip install -e /tmp/{repo.replace('/', '-')}")
-                print(f"✓ Installed: {repo}")
+                print(f"✓ Install result: {install_result}")
                 
-                # Verify installation
+                # Check if the package was actually installed
+                list_result = self.sandbox.process.exec("pip list | grep -i common")
+                print(f"✓ Installed packages with 'common': {list_result}")
+                
+                # Verify installation - debug what's available
+                debug_result = self.sandbox.process.exec("python -c 'import sys; print(\"Python path:\"); [print(f\"  {p}\") for p in sys.path]; print(\"\\nInstalled packages:\"); import pkg_resources; [print(f\"  {p.project_name}=={p.version}\") for p in pkg_resources.working_set if \"common\" in p.project_name.lower()]'")
+                print(f"✓ Debug info: {debug_result}")
+                
+                # Try to import common
                 verify_result = self.sandbox.process.exec("python -c 'import common; print(f\"common version: {common.__version__}\")'")
                 print(f"✓ Verification: {verify_result}")
                 
