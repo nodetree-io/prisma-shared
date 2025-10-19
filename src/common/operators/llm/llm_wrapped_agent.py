@@ -195,7 +195,7 @@ if __name__ == "__main__":
     async def test_wrapped_agents():
         """Simple test for wrapped agents"""
         # Mock LLM instance for testing
-        model_name = os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-3.5-turbo"
+        model_name = os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-4.1-mini"
         print(f"Using model: {model_name}")
         
         # Example 1: Without custom system prompt

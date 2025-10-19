@@ -52,7 +52,7 @@ class BaseOperator(ABC):
         """
         self.name = name
         self.description = description if description else f"A {name} operator for YOPO system"
-        self.model_name = model_name if model_name else os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-3.5-turbo"
+        self.model_name = model_name if model_name else os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-4.1-mini"
         self.system_prompt = system_prompt
         self.mcps = []
         self.tools = tools

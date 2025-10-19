@@ -192,7 +192,7 @@ def llm_instance(model_name: str, system_prompt: Optional[str] = None, **kwargs)
 
 if __name__ == "__main__":
     # Get model name from environment variable
-    model_name = os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-3.5-turbo"
+    model_name = os.getenv("DEV_MODEL_NAME") or os.getenv("DEV_LLM_NAME") or "gpt-4.1-mini"
     print(f"Using model: {model_name}")
     
     # Example 1: Without custom system prompt
