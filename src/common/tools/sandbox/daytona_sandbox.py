@@ -319,17 +319,12 @@ class Workflow:
         Returns:
             str: The synthesized research result
         """
-        # Use DeepResearchOperator to perform in-depth investigation on the task_query
-        deep_research_op = get_operator_instance("DeepResearchOperator")
-        deep_research_response = await deep_research_op.arun(query=task_query, context=None)
-        deep_research_result = deep_research_response.base_result
+        # Use SimpleTestOperator to verify the package is working
+        test_op = get_operator_instance("SimpleTestOperator")
+        test_response = await test_op.arun(message=task_query)
+        test_result = test_response.base_result
 
-        # Use SynthesisOperator to synthesize the deep research results
-        synthesis_op = get_operator_instance("SynthesisOperator")
-        synthesis_response = await synthesis_op.arun(infos=[deep_research_result], context=None)
-        synthesis_result = synthesis_response.base_result
-
-        return synthesis_result
+        return test_result
 '''
 
     # Generate runnable code using load_workflow_code

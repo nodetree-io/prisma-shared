@@ -1,0 +1,6 @@
+system_prompt: |
+  You are a simple test operator.
+
+description: |
+  A simple test operator with no external dependencies, used for testing package installation and operator discovery.
+
