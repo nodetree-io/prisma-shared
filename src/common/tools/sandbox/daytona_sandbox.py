@@ -101,6 +101,9 @@ class SandboxEngine:
                 else:
                     print("⚠️ No GITHUB_TOKEN found, trying public access")
                 
+                # Remove old clone if exists
+                self.sandbox.process.exec(f"rm -rf /tmp/{repo.replace('/', '-')}")
+                
                 # Clone the repository first
                 clone_result = self.sandbox.process.exec(f"git clone https://github.com/{repo}.git /tmp/{repo.replace('/', '-')}")
                 print(f"✓ Clone result: {clone_result}")
