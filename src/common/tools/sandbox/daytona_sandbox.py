@@ -115,11 +115,20 @@ class SandboxEngine:
                 
                 # Install the package in editable mode from the cloned directory
                 install_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .")
+                if install_result.exit_code != 0:
+                    print(f"❌ Install failed with exit code {install_result.exit_code}")
+                    print(f"Error output: {install_result.result}")
+                    raise RuntimeError(f"Failed to install package: {install_result.result}")
                 print(f"✓ Install result: {install_result}")
                 
                 # Install AI dependencies for full functionality
                 ai_install_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .[ai]")
-                print(f"✓ AI dependencies install result: {ai_install_result}")
+                if ai_install_result.exit_code != 0:
+                    print(f"❌ AI dependencies install failed with exit code {ai_install_result.exit_code}")
+                    print(f"Error output: {ai_install_result.result}")
+                    # Don't fail completely, AI dependencies are optional
+                else:
+                    print(f"✓ AI dependencies install result: {ai_install_result}")
                 
                 # Check if the package was actually installed
                 list_result = self.sandbox.process.exec("pip list | grep -i common")
@@ -254,7 +263,15 @@ if __name__ == "__main__":
         print("\n🛑 Stopping sandbox...")
         self.sandbox.stop(timeout=timeout)
         print("✓ Sandbox stopped")
-    
+    def delete(self):
+        """Delete the sandbox."""
+        if not self.sandbox:
+            return
+        
+        print("\n🗑️ Deleting sandbox...")
+        self.sandbox.delete()
+        print("✓ Sandbox deleted")
+
     def __enter__(self):
         """Context manager entry."""
         return self.start()
@@ -326,5 +343,5 @@ class Workflow:
     engine.start()
     engine.run_workflow(code)
     print("✓ Sandbox exit!")
-    engine.stop()
+    engine.delete()
 

@@ -40,14 +40,16 @@ dependencies = [
     "daytona>=0.111.0",
     "langchain-core>=0.1.0",
     "langgraph>=0.1.0",
-    "mcp-use>=1.3.11",
-    "browser-use>=0.8.1",
-    "pillow>=12.0.0",
 ]
 
 [project.optional-dependencies]
 system = [
     "psutil>=5.9.0",
+]
+advanced = [
+    "mcp-use>=1.3.11",
+    "browser-use>=0.8.1",
+    "pillow>=12.0.0",
 ]
 dev = [
     "pytest>=7.0.0",
@@ -73,7 +75,7 @@ ai = [
     "langchain-google-genai>=0.1.0",
 ]
 all = [
-    "common[gmail,notion,ai]"
+    "common[gmail,notion,ai,advanced]"
 ]
 
 [build-system]
