@@ -122,6 +122,10 @@ class ExtractOperator(BaseOperator):
     def __init__(self, 
                  prompt_path: Optional[str] = None,
                  **kwargs):
+        # Initialize defaults
+        system_prompt = None
+        description = None
+        
         # Load prompts from YAML if path provided
         if prompt_path and os.path.exists(prompt_path):
             with open(prompt_path, 'r', encoding='utf-8') as f:
