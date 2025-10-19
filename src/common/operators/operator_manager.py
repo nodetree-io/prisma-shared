@@ -136,7 +136,7 @@ class OperatorManager:
             )
             
         except Exception as e:
-            self.logger.error(f"Failed to register operator {name}: {e}")
+            self.logger.error(f"Failed to register operator {operator_class.__name__} from {module_name}: {e}")
 
     def _extract_arun_schema(self, operator_class: Type[BaseOperator]) -> Tuple[Dict[str, Any], str]:
         """Extract argument schema for the arun method."""
