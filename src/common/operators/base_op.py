@@ -59,11 +59,16 @@ class BaseOperator(ABC):
         # self.tools = self._load_tools()
         
         # Initialize LLM provider if model_name is provided
-        self.llm_provider = llm_instance(
-            model_name=self.model_name,
-            system_prompt=system_prompt,
-            **kwargs
-        )
+        try:
+            self.llm_provider = llm_instance(
+                model_name=self.model_name,
+                system_prompt=system_prompt,
+                **kwargs
+            )
+        except Exception as e:
+            # Allow operator to be instantiated even if LLM initialization fails
+            # This is useful for operator discovery and registration
+            self.llm_provider = None
 
     async def _load_tools(self) -> List[Any]:
         """
