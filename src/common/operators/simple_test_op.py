@@ -22,6 +22,10 @@ class SimpleTestOperator(BaseOperator):
             **kwargs
         )
     
+    def _build_workflow(self):
+        """Build workflow - not needed for this simple test operator."""
+        return None
+    
     async def arun(self, message: str = "test") -> OperatorResult:
         """
         Run a simple test operation.
