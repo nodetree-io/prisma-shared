@@ -92,17 +92,34 @@ class SandboxEngine:
             print(f"📦 Installing {repo}...")
             try:
                 # Configure git with token
-                self.sandbox.process.exec(
-                    f'git config --global url."https://x-access-token:{os.getenv("GITHUB_TOKEN")}@github.com/".insteadOf "https://github.com/"'
-                )
+                github_token = os.getenv("GITHUB_TOKEN")
+                if github_token:
+                    print(f"✓ Using GitHub token: {github_token[:10]}...")
+                    self.sandbox.process.exec(
+                        f'git config --global url."https://x-access-token:{github_token}@github.com/".insteadOf "https://github.com/"'
+                    )
+                else:
+                    print("⚠️ No GITHUB_TOKEN found, trying public access")
                 
                 # Clone the repository first
                 clone_result = self.sandbox.process.exec(f"git clone https://github.com/{repo}.git /tmp/{repo.replace('/', '-')}")
-                print(f"✓ Cloned repository: {repo}")
+                print(f"✓ Clone result: {clone_result}")
+                
+                # Check if the directory exists and has pyproject.toml
+                check_result = self.sandbox.process.exec(f"ls -la /tmp/{repo.replace('/', '-')}")
+                print(f"✓ Directory contents: {check_result}")
+                
+                # Check if pyproject.toml exists
+                pyproject_check = self.sandbox.process.exec(f"ls -la /tmp/{repo.replace('/', '-')}/pyproject.toml")
+                print(f"✓ pyproject.toml check: {pyproject_check}")
                 
                 # Install the package in editable mode from the cloned directory
-                install_result = self.sandbox.process.exec(f"pip install -e /tmp/{repo.replace('/', '-')}")
+                install_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .")
                 print(f"✓ Install result: {install_result}")
+                
+                # Install AI dependencies for full functionality
+                ai_install_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .[ai]")
+                print(f"✓ AI dependencies install result: {ai_install_result}")
                 
                 # Check if the package was actually installed
                 list_result = self.sandbox.process.exec("pip list | grep -i common")
@@ -162,7 +179,38 @@ class SandboxEngine:
         print("✓ Sandbox engine ready!\n")
         return self
     
-    def run(self, code: str, **kwargs) -> Any:
+    def load_workflow_code(self, workflow_class: str, query: str, **workflow_kwargs) -> str:
+        """
+        Generate runnable sandbox code from a workflow class definition.
+        
+        Args:
+            workflow_class: The workflow class code (class definition as string)
+            query: The query string to pass to the workflow
+            **workflow_kwargs: Additional keyword arguments for the workflow
+            
+        Returns:
+            Complete executable code string for the sandbox
+        """
+        # Build kwargs string if provided
+        kwargs_str = ""
+        if workflow_kwargs:
+            kwargs_parts = [f"{k}={repr(v)}" for k, v in workflow_kwargs.items()]
+            kwargs_str = ", " + ", ".join(kwargs_parts)
+        
+        code = f'''
+import asyncio
+
+{workflow_class}
+
+if __name__ == "__main__":
+    workflow = Workflow()
+    query = {repr(query)}
+    result = asyncio.run(workflow(query{kwargs_str}))
+    print(result)
+'''
+        return code
+    
+    def run_workflow(self, code: str, **kwargs) -> Any:
         """
         Execute Python code in the sandbox.
         
@@ -220,22 +268,20 @@ class SandboxEngine:
 if __name__ == "__main__":
     # Create sandbox engine with custom configuration
     engine = SandboxEngine(
-        public_packages=["numpy", "pandas"],
         private_repos=["nodetree-io/prisma-shared"],
         cpu=1,
         memory=1,
         disk=1,
     )
 
+    workflow_class = '''
 
-    code = '''
 from typing import Optional, List
 from common.operators.operator_manager import get_operator_instance
 from common.tools.tool_manager import get_tools
+
 class Workflow:
-    def __init__(
-        self
-    ) -> None:
+    def __init__(self):
         self.name = "Deep Research and Synthesis Workflow"
         self.description = (
             "Workflow that performs deep research on the given task query and "
@@ -264,7 +310,21 @@ class Workflow:
         synthesis_result = synthesis_response.base_result
 
         return synthesis_result
-    '''
-    with engine:
+'''
 
-        engine.run(code)
+    # Generate runnable code using load_workflow_code
+    query = "MSECE CMU start in Spring 2026 2 year program, give me class recommendations for securing FAANG internship in 2027 summer"
+    code = engine.load_workflow_code(workflow_class, query)
+    
+    print("📝 Generated runnable code:")
+    print("=" * 80)
+    print(code)
+    print("=" * 80)
+    print()
+
+    # Execute in sandbox
+    engine.start()
+    engine.run_workflow(code)
+    print("✓ Sandbox exit!")
+    engine.stop()
+
