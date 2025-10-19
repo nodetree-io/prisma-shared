@@ -98,7 +98,7 @@ class OperatorManager:
             module_name = file_path.stem
             try:
                 # Import the module
-                module = importlib.import_module(f".{module_name}", package="common.operators")
+                module = importlib.import_module(f".{module_name}", package="src.common.operators")
                 
                 # Find all classes that inherit from BaseOperator
                 for name, obj in inspect.getmembers(module, inspect.isclass):
@@ -130,7 +130,7 @@ class OperatorManager:
                 name=name,
                 description=description,
                 class_name=operator_class.__name__,
-                module_path=f"common.operators.{module_name}",
+                module_path=f"src.common.operators.{module_name}",
                 args_schema=arun_schema,
                 arun_doc=arun_doc
             )
