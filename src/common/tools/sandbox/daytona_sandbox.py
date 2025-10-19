@@ -105,30 +105,11 @@ class SandboxEngine:
                 print(f"✓ Installed: {repo}")
                 
                 # Verify installation
-                verify_result = self.sandbox.process.exec("python -c 'import prisma_common; print(f\"prisma_common version: {prisma_common.__version__}\")'")
+                verify_result = self.sandbox.process.exec("python -c 'import common; print(f\"common version: {common.__version__}\")'")
                 print(f"✓ Verification: {verify_result}")
                 
             except Exception as e:
                 print(f"⚠️ Failed to install {repo}: {e}")
-                # Try alternative installation method
-                try:
-                    print(f"🔄 Trying alternative installation for {repo}...")
-                    result = self.sandbox.process.exec(f"pip install git+https://github.com/{repo}.git")
-                    print(f"✓ Alternative installation successful: {repo}")
-                    
-                    # Try verification again
-                    verify_result = self.sandbox.process.exec("python -c 'import prisma_common; print(f\"prisma_common version: {prisma_common.__version__}\")'")
-                    print(f"✓ Verification: {verify_result}")
-                    
-                except Exception as e2:
-                    print(f"❌ Alternative installation also failed: {e2}")
-                    # Try one more method - direct pip install
-                    try:
-                        print(f"🔄 Trying direct pip install for {repo}...")
-                        result = self.sandbox.process.exec(f"pip install git+https://github.com/{repo}.git#egg=prisma-common")
-                        print(f"✓ Direct installation successful: {repo}")
-                    except Exception as e3:
-                        print(f"❌ All installation methods failed: {e3}")
     
     def start(self, timeout: int = 60) -> 'SandboxEngine':
         """
