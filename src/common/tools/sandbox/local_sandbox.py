@@ -1621,3 +1621,8 @@ def evaluate_python_code(
         raise InterpreterError(
             f"Code execution failed at line '{ast.get_source_segment(code, node)}' due to: {type(e).__name__}: {e}"
         )
+
+if __name__ == "__main__":
+    result, is_final_answer = evaluate_python_code("print('hello world')")
+    print(result)
+    print(is_final_answer)
