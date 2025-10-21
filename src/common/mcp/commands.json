@@ -1,0 +1,183 @@
+{
+  "OpenAPI Explorer": {
+    "cmd": "node index.js run",
+    "env": [],
+    "cwd": "../openapi-mcp-server",
+    "description": "The MCP server \"OpenAPI Explorer\" provides comprehensive access to a wide range of APIs spanning AI services, cloud infrastructure, social media, communication platforms, e-commerce, data analytics, and more. It facilitates exploration, validation, and interaction with OpenAPI specifications, enabling seamless integration and usage of diverse third-party services through standardized API operations. Its primary capabilities include API overview and operation inspection, coupled with direct interfacing to multiple major platforms for data retrieval, processing, and application management."
+  },
+  "Unit Converter": {
+    "cmd": "uv run python -m unit_converter_mcp.server",
+    "env": [],
+    "cwd": "../unit-converter-mcp",
+    "description": "The MCP server \"Unit Converter\" provides comprehensive unit conversion services across a wide range of physical quantities, including temperature, length, mass, energy, and more. It supports individual conversions as well as batch processing of multiple conversion requests, returning detailed, structured results with success status and error handling. Additionally, the server can list all supported units for each type of conversion to assist users."
+  },
+  "Wikipedia": {
+    "cmd": "uv run python -m wikipedia_mcp",
+    "env": [],
+    "cwd": "../wikipedia-mcp",
+    "description": "The Wikipedia MCP server provides comprehensive access to Wikipedia content, enabling search, retrieval, and detailed summarization of articles and their sections tailored to specific queries. It also offers extraction of key facts, navigation through article sections and links, and discovery of related topics to facilitate in-depth research and exploration."
+  },
+  "Google Maps": {
+    "cmd": "node dist/cli.js --port 3001",
+    "env": [
+      "GOOGLE_MAPS_API_KEY"
+    ],
+    "cwd": "../mcp-google-map",
+    "transport": "http",
+    "port": 3001,
+    "endpoint": "/mcp",
+    "description": "The Google Maps MCP server provides comprehensive location-based services including searching for nearby places, retrieving detailed place information, and converting between addresses and geographic coordinates. It also offers route planning with travel distances, durations, turn-by-turn navigation, and elevation data, enabling efficient geographic data processing and navigation support."
+  },
+  "Bibliomantic": {
+    "cmd": "python bibliomantic_server.py",
+    "env": [],
+    "cwd": "../bibliomantic-mcp-server",
+    "description": "The Bibliomantic MCP server offers enhanced tools for traditional I Ching and bibliomantic divination, providing richer, more detailed content while maintaining full backward compatibility with existing interfaces. It delivers comprehensive hexagram information with traditional Chinese nomenclature and symbolism, alongside improved consultation experiences and detailed server statistics."
+  },
+  "BioMCP": {
+    "cmd": "uv run biomcp run",
+    "env": [
+      "NCI_API_KEY"
+    ],
+    "cwd": "../biomcp",
+    "description": "BioMCP is a comprehensive biomedical data server that enables unified, field-specific searching and detailed retrieval across multiple data domains including biomedical literature, clinical trials, genetic variants, genes, drugs, and diseases. It integrates diverse authoritative sources (e.g., PubMed, ClinicalTrials.gov, MyVariant.info, NCI databases) and supports advanced query syntax and domain-specific filters, facilitating efficient cross-domain research, systematic analysis planning with a mandatory think-step, and standardized access to rich annotations and metadata for precision biomedical investigations."
+  },
+  "Call for Papers": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../call-for-papers-mcp/call-for-papers-mcp-main",
+    "description": "The MCP server \"Call for Papers\" helps users find academic conferences by searching for events that match specific keywords. Its main capability is to provide tailored conference listings based on user-defined topics, streamlining the process of discovering relevant calls for papers."
+  },
+  "Car Price Evaluator": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../car-price-mcp-main",
+    "description": "The \"Car Price Evaluator\" MCP server provides access to the FIPE database to retrieve comprehensive information on vehicle brands and their current market prices. It allows users to fetch available car brands, search for car models and prices by brand, and obtain vehicle lists filtered by type, including cars, motorcycles, and trucks."
+  },
+  "Context7": {
+    "cmd": "node dist/index.js",
+    "env": [],
+    "cwd": "../context7-mcp",
+    "description": "The Context7 MCP server enables efficient retrieval of software library information by resolving package or product names to precise, Context7-compatible library IDs and fetching their up-to-date documentation. Its main capabilities include intelligently selecting the most relevant libraries based on name similarity, description relevance, documentation quality, and trustworthiness, ensuring users access authoritative and comprehensive code resources."
+  },
+  "DEX Paprika": {
+    "cmd": "node src/index.js",
+    "env": [],
+    "cwd": "../dexpaprika-mcp",
+    "description": "The DEX Paprika MCP server provides comprehensive access to decentralized exchange (DEX) data across multiple blockchain networks, enabling users to discover supported networks, DEXes, liquidity pools, tokens, and detailed pool activities. It supports data retrieval for pool liquidity, token information, historical price data, and recent transactions, alongside powerful search and ecosystem-wide statistics for efficient exploration and analysis of the decentralized trading landscape."
+  },
+  "FruityVice": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../fruityvice-mcp",
+    "description": "The FruityVice MCP server provides detailed nutritional information and botanical data for various fruits. By supplying a fruit name, users can retrieve comprehensive details including its family, genus, order, and nutritional content, enabling informed insights about different fruits."
+  },
+  "Game Trends": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../game-trends-mcp",
+    "description": "The Game Trends MCP server provides real-time analytics on trending, top-selling, and most-played games across major digital platforms like Steam and Epic Games Store. It aggregates live data including sales, player statistics, and current promotions, offering comprehensive insights into gaming market trends. Additionally, it includes tools to monitor the health status of its gaming data APIs."
+  },
+  "Huge Icons": {
+    "cmd": "node build/index.js",
+    "env": [],
+    "cwd": "../hugeicons-mcp-server",
+    "description": "The \"Huge Icons\" MCP server provides access to a comprehensive collection of icons through listing and search functionalities, allowing users to find icons by name or tags efficiently. Additionally, it offers platform-specific usage instructions to facilitate seamless integration of Hugeicons across different environments."
+  },
+  "Hugging Face": {
+    "cmd": "python src/huggingface/server.py",
+    "env": [
+      "HF_TOKEN"
+    ],
+    "cwd": "../huggingface-mcp-server",
+    "description": "The Hugging Face MCP server provides comprehensive access to the Hugging Face Hub, enabling users to search, retrieve, and explore detailed information about models, datasets, Spaces, papers, and collections. It serves as a centralized interface for discovering and obtaining metadata on a wide range of machine learning resources curated by Hugging Face."
+  },
+  "Math MCP": {
+    "cmd": "node build/index.js",
+    "env": [],
+    "cwd": "../math-mcp",
+    "description": "Math MCP is a versatile mathematical computation server that performs fundamental arithmetic operations such as addition, subtraction, multiplication, and division. It also provides statistical calculations including sum, mean, median, mode, minimum, and maximum, along with number rounding functions like floor, ceiling, and round. This server is designed to handle a wide range of numeric processing tasks efficiently."
+  },
+  "NixOS": {
+    "cmd": "python mcp_nixos/server.py",
+    "env": [],
+    "cwd": "../mcp-nixos",
+    "description": "The MCP server \"NixOS\" provides comprehensive search, lookup, and statistical tools for managing NixOS packages, options, flakes, and related configuration frameworks like Home Manager and nix-darwin. It enables users to explore package versions, system configuration options, channels, and flake metadata to support system customization, reproducible builds, and detailed environment management across multiple NixOS channels and ecosystems."
+  },
+  "OSINT Intelligence": {
+    "cmd": "python mcp_osint_server/mcp_osint_server/main.py",
+    "env": [],
+    "cwd": "../mcp-osint-server",
+    "description": "The MCP server \"OSINT Intelligence\" is designed to gather, analyze, and provide detailed information about internet domains and networks using various reconnaissance tools. It offers capabilities such as domain ownership lookup, DNS enumeration, subdomain variant detection, and network scanning to support comprehensive open-source intelligence investigations."
+  },
+  "Reddit": {
+    "cmd": "uv run python -m mcp_reddit.reddit_fetcher",
+    "env": [],
+    "cwd": "../mcp-reddit",
+    "description": "The MCP server \"Reddit\" enables retrieval of trending posts from any specified subreddit, providing a concise list of hot threads. It also allows fetching detailed content of individual posts along with their top-level comments up to a defined depth, facilitating in-depth exploration of Reddit discussions."
+  },
+  "National Parks": {
+    "cmd": "node build/index.js",
+    "env": [
+      "NPS_API_KEY"
+    ],
+    "cwd": "../mcp-server-nationalparks",
+    "description": "The \"National Parks\" MCP server provides comprehensive information and services related to national parks, allowing users to search parks by various criteria, access detailed park information, and stay updated on alerts and events. It also offers practical details about visitor centers, campgrounds, and upcoming activities, enabling users to plan visits effectively."
+  },
+  "Medical Calculator": {
+    "cmd": "python medcalc/__main__.py",
+    "env": [],
+    "cwd": "../medcalc",
+    "description": "The Medical Calculator (MCP) server provides a comprehensive suite of clinical decision support tools that compute a wide range of medical scores, indexes, and risk assessments related to renal function, cardiovascular risk, metabolic parameters, fluid management, and other key clinical domains. It enables precise calculation of complex medical formulas such as eGFR, cardiac risk scores, electrolyte corrections, pregnancy dating, and drug dosing conversions, facilitating accurate and efficient patient evaluation and management."
+  },
+  "Metropolitan Museum": {
+    "cmd": "node dist/index.js",
+    "env": [],
+    "cwd": "../metmuseum-mcp",
+    "description": "The Metropolitan Museum (MCP) server provides access to the Met Museum's collection by allowing users to list all museum departments, search for objects with optional filters for titles and images, and retrieve detailed information about specific objects using their IDs. It enables efficient exploration and retrieval of the museum's extensive art collection data."
+  },
+  "Movie Recommender": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../movie-recommender-mcp/movie-reccomender-mcp",
+    "description": "The Movie Recommender server provides personalized movie suggestions based on user-provided keywords. By analyzing inputted themes or interests, it generates relevant movie recommendations to help users discover films matching their preferences."
+  },
+  "NASA Data": {
+    "cmd": "uv run python main.py",
+    "env": [
+      "NASA_API_KEY"
+    ],
+    "cwd": "../nasa-mcp",
+    "description": "The NASA Data MCP server provides comprehensive access to a wide array of NASA’s space and Earth science datasets, including astronomy images, asteroid and exoplanet data, solar and space weather events, Earth and Mars imagery, and mission details. It enables querying and retrieval of time-specific or event-based data such as solar flares, coronal mass ejections, geomagnetic storms, and planetary rover photos, supporting research and exploration activities."
+  },
+  "OKX Exchange": {
+    "cmd": "node build/index.js",
+    "env": [],
+    "cwd": "../okx-mcp",
+    "description": "The OKX Exchange MCP server provides real-time market data access for OKX trading instruments. Its main capabilities include retrieving the latest price and obtaining historical candlestick data, enabling users to monitor and analyze market trends effectively."
+  },
+  "Paper Search": {
+    "cmd": "uv run python -m paper_search_mcp.server",
+    "env": [],
+    "cwd": "../paper-search-mcp",
+    "description": "The \"Paper Search\" MCP server enables comprehensive academic literature retrieval by allowing users to search, download, and extract text from papers across multiple major repositories, including arXiv, PubMed, bioRxiv, medRxiv, Google Scholar, IACR, and Semantic Scholar. Its main capabilities include querying papers with customizable parameters, obtaining paper metadata, downloading PDFs when available, and extracting full-text content for further analysis."
+  },
+  "Scientific Computing": {
+    "cmd": "python src/server.py",
+    "env": [],
+    "cwd": "../scientific_computation_mcp",
+    "description": "The \"Scientific Computing\" MCP server provides comprehensive in-memory management and advanced manipulation of NumPy tensors, supporting creation, arithmetic operations, decompositions, and matrix analyses. It also offers symbolic calculus tools for vector and scalar fields, including differentiation and vector calculus operations, alongside 2D and 3D function and vector field visualization capabilities."
+  },
+  "Weather Data": {
+    "cmd": "python server.py",
+    "env": [],
+    "cwd": "../weather_mcp",
+    "description": "The \"Weather Data\" MCP server provides comprehensive weather information services, including retrieving current weather conditions and multi-day forecasts for specified cities. It also supports location searching to help identify cities by name, ensuring accurate weather queries. Additionally, it maintains a legacy tool for backward compatibility that delivers current temperature data."
+  },
+  "Time MCP": {
+    "cmd": "uv run python -m mcp_server_time",
+    "env": [],
+    "cwd": "../time-mcp",
+    "description": "The Time MCP server provides accurate time-related services, allowing users to retrieve the current time in various timezones and convert times between different timezones. Its main capabilities include timezone-specific time retrieval and seamless time conversion, facilitating global time management."
+  }
+}

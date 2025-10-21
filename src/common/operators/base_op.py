@@ -16,8 +16,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
-from .llm.llm_provider import llm_instance
-# from ..mcp.mcp_client import MCPZoo  # TODO: MCP module not available
+from src.common.operators.llm.llm_provider import llm_instance
+# from src.common.mcp.mcp_client import MCPZoo  # TODO: MCP module not available
 
 load_dotenv()
 

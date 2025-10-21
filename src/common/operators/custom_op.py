@@ -8,9 +8,9 @@ This agent provides flexible functionality for common use cases.
 from typing import Dict, Any, Optional, List
 import yaml
 
-from .llm.llm_wrapped_agent import create_wrapped_agent
-from .base_op import BaseOperator, OperatorResult
-from ..utils.logging import get_logger
+from src.common.operators.llm.llm_wrapped_agent import create_wrapped_agent
+from src.common.operators.base_op import BaseOperator, OperatorResult
+from src.common.utils.logging import get_logger
 
 logger = get_logger(name="CustomOperator")
 

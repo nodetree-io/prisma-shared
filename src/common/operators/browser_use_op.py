@@ -18,9 +18,9 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 
-from .base_op import BaseOperator, OperatorResult
-from .llm.llm_provider import llm_instance, LLMProvider
-from ..utils.logging import get_logger
+from src.common.operators.base_op import BaseOperator, OperatorResult
+from src.common.operators.llm.llm_provider import llm_instance, LLMProvider
+from src.common.utils.logging import get_logger
 
 logger = get_logger(name="BrowserUseOperator")
 

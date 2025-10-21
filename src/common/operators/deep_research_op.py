@@ -17,13 +17,13 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 
-from .llm.llm_wrapped_agent import create_wrapped_agent
-from .llm.llm_provider import llm_instance, LLMProvider
+from src.common.operators.llm.llm_wrapped_agent import create_wrapped_agent
+from src.common.operators.llm.llm_provider import llm_instance, LLMProvider
 # from ..mcp.mcp_client import MCPZoo  # TODO: MCP module not available
-from ..tools.tool_manager import get_tools
-from .base_op import BaseOperator, OperatorResult
-from .utils import json_format_parser
-from ..utils.logging import get_logger
+from src.common.tools.tool_manager import get_tools
+from src.common.operators.base_op import BaseOperator, OperatorResult
+from src.common.operators.utils import json_format_parser
+from src.common.utils.logging import get_logger
 
 logger = get_logger(name="DeepResearchOperator")
 
