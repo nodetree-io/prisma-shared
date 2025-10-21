@@ -6,7 +6,7 @@ A general-purpose sandbox execution engine for running Python code with private 
 from daytona import Daytona, Image, CreateSandboxFromImageParams, Resources
 import os
 from typing import Optional, List, Dict, Any
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 
 
 class SandboxEngine:
@@ -44,34 +44,15 @@ class SandboxEngine:
             auto_archive_interval: Auto-archive after N minutes
             auto_delete_interval: Auto-delete after N minutes
         """
-        # Load environment variables
         load_dotenv()
         
         # Configuration
+        # Note: mcp-use, browser-use, pillow will be installed via prisma-shared[advanced]
         self.public_packages = public_packages or ["numpy", "pandas"]
         self.private_repos = private_repos or ["nodetree-io/prisma-shared"]
         
-        # Auto-include common environment variables from current environment
-        auto_env_vars = {}
-        important_env_vars = [
-            "OPENAI_API_KEY",
-            "ANTHROPIC_API_KEY", 
-            "GOOGLE_API_KEY",
-            "GITHUB_TOKEN",
-            "DEV_MODEL_NAME",
-            "DEV_LLM_NAME",
-            "PROD_MODEL_NAME",
-            "PROD_LLM_NAME",
-        ]
-        
-        for var in important_env_vars:
-            value = os.getenv(var)
-            if value:
-                auto_env_vars[var] = value
-                print(f"✓ Including env var: {var}")
-        
-        # Merge auto-detected with user-provided env vars (user-provided takes precedence)
-        self.env_vars = {**auto_env_vars, **(env_vars or {})}
+        # Load all environment variables from .env file (or use provided ones)
+        self.env_vars = env_vars if env_vars is not None else dict(dotenv_values())
         self.cpu = cpu
         self.memory = memory
         self.disk = disk
@@ -79,7 +60,7 @@ class SandboxEngine:
         self.auto_archive_interval = auto_archive_interval
         self.auto_delete_interval = auto_delete_interval
         
-        # Runtime state
+
         self.daytona = Daytona()
         self.sandbox = None
         
@@ -145,14 +126,15 @@ class SandboxEngine:
                     raise RuntimeError(f"Failed to install package: {install_result.result}")
                 print(f"✓ Install result: {install_result}")
                 
-                # Install AI dependencies for full functionality
-                ai_install_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .[ai]")
-                if ai_install_result.exit_code != 0:
-                    print(f"❌ AI dependencies install failed with exit code {ai_install_result.exit_code}")
-                    print(f"Error output: {ai_install_result.result}")
-                    # Don't fail completely, AI dependencies are optional
+                # Install all dependencies for full functionality (ai + advanced)
+                # advanced includes: mcp-use, browser-use, pillow
+                all_deps_result = self.sandbox.process.exec(f"cd /tmp/{repo.replace('/', '-')} && pip install -e .[ai,advanced]")
+                if all_deps_result.exit_code != 0:
+                    print(f"❌ Dependencies install failed with exit code {all_deps_result.exit_code}")
+                    print(f"Error output: {all_deps_result.result}")
+                    # Don't fail completely, these dependencies are optional
                 else:
-                    print(f"✓ AI dependencies install result: {ai_install_result}")
+                    print(f"✓ Dependencies install result: {all_deps_result}")
                 
                 # Check if the package was actually installed
                 list_result = self.sandbox.process.exec("pip list | grep -i common")
@@ -318,11 +300,15 @@ if __name__ == "__main__":
     workflow_class = '''
 
 from typing import Optional, List
+
 from common.operators.operator_manager import get_operator_instance
 from common.tools.tool_manager import get_tools
 
+
 class Workflow:
-    def __init__(self):
+    def __init__(
+        self
+    ) -> None:
         self.name = "Deep Research and Synthesis Workflow"
         self.description = (
             "Workflow that performs deep research on the given task query and "
@@ -340,12 +326,17 @@ class Workflow:
         Returns:
             str: The synthesized research result
         """
-        # Use SimpleTestOperator to verify the package is working
-        test_op = get_operator_instance("SimpleTestOperator")
-        test_response = await test_op.arun(message=task_query)
-        test_result = test_response.base_result
+        # Use DeepResearchOperator to perform in-depth investigation on the task_query
+        deep_research_op = get_operator_instance("DeepResearchOperator")
+        deep_research_response = await deep_research_op.arun(query=task_query, context=None)
+        deep_research_result = deep_research_response.base_result
 
-        return test_result
+        # Use SynthesisOperator to synthesize the deep research results
+        synthesis_op = get_operator_instance("SynthesisOperator")
+        synthesis_response = await synthesis_op.arun(infos=[deep_research_result], context=None)
+        synthesis_result = synthesis_response.base_result
+
+        return synthesis_result
 '''
 
     # Generate runnable code using load_workflow_code
