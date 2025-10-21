@@ -8,8 +8,8 @@ import sys
 
 from pydantic import BaseModel, Field
 
-from .base_op import BaseOperator
-from ..utils.logging import get_logger
+from src.common.operators.base_op import BaseOperator
+from src.common.utils.logging import get_logger
 
 class OperatorInfo(BaseModel):
     """Information about an operator including its metadata and argument schema."""

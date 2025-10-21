@@ -29,11 +29,11 @@ import cv2
 from scenedetect import open_video, SceneManager
 from scenedetect.detectors import ContentDetector
 
-from .llm.llm_wrapped_agent import create_wrapped_agent
-from .llm.llm_provider import llm_instance, LLMProvider
-from .utils import MarkitdownConverter
-from .base_op import BaseOperator, OperatorResult
-from ..utils.logging import get_logger
+from src.common.operators.llm.llm_wrapped_agent import create_wrapped_agent
+from src.common.operators.llm.llm_provider import llm_instance, LLMProvider
+from src.common.operators.utils import MarkitdownConverter
+from src.common.operators.base_op import BaseOperator, OperatorResult
+from src.common.utils.logging import get_logger
 
 logger = get_logger(name="FileProcessingOperator")
 

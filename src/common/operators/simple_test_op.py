@@ -3,7 +3,7 @@ Simple Test Operator - No external dependencies
 Used for testing package installation
 """
 
-from .base_op import BaseOperator, OperatorResult
+from src.common.operators.base_op import BaseOperator, OperatorResult
 from typing import Optional, Dict, Any
 
 
